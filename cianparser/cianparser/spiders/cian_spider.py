@@ -18,7 +18,7 @@ class CianSpider(scrapy.Spider):
             yield scrapy.Request(s_url_page, callback=self.page_parser)
 
     def page_parser(self, response):
-         l_link = response.xpath('//*[@id="frontend-serp"]/div/div[6]//h3/div/a/@href')
+         l_link = response.xpath('//*[@id="frontend-serp"]/div/div[6]//h3//@href')
          for link in l_link:
              yield scrapy.Request(link, callback=self.item_parser)
 
@@ -34,7 +34,11 @@ class CianSpider(scrapy.Spider):
 
 # Xpath to links on the page
 #'//*[@id="frontend-serp"]/div/div[6]//h3/div/a/@href'
+#'//*[@id="frontend-serp"]/div/div[6]//h3//@href'
 
 # Xpath to links to other pages
 #'//*[@id="frontend-serp"]/div/div[7]//li/a/@href'
 #'//*[@id="frontend-serp"]/div/div[7]//li/a/text()'
+
+# Условия сделки
+#'//*[@id="frontend-offer-card"]/main/div[2]/div[1]/section[2]/div[2]/div[1]/div[1]/div[1]/text()'
