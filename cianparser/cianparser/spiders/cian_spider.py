@@ -11,10 +11,12 @@ class CianSpider(scrapy.Spider):
         url_split = ur.urlsplit(self.start_urls[0])
         link = response.xpath('//*[@id="frontend-serp"]/div/div[7]//li/a/@href').extract_first()
         url = "https://" + url_split.netloc + link
-        print(url)
+        print("==============  ",url)
         for page_number in range(2, MAXIMUM_PAGE_NUMBER):
             l_url = map(lambda x: f"p={page_number}" if "p=" in x else x, url.split("&"))
             s_url_page = "&".join(list(l_url))
+            print ( "The link before join +++++++++++++", l_url)
+            print( "The first link ------- ", s_url_page)
             yield scrapy.Request(s_url_page, callback=self.page_parser)
 
     def page_parser(self, response):
@@ -23,8 +25,7 @@ class CianSpider(scrapy.Spider):
              yield scrapy.Request(link, callback=self.item_parser)
 
     def item_parser(self, response):
-
-         pass
+         print(response.url)
 
 
 
